@@ -1,6 +1,9 @@
 # Use light-weight Nginx server
 FROM nginx:alpine
 
+# Copy custom Nginx configuration to override IPv6 default
+COPY default.conf /etc/nginx/conf.d/default.conf
+
 # Copy static application files to Nginx web root
 COPY index.html /usr/share/nginx/html/index.html
 COPY questions.js /usr/share/nginx/html/questions.js
