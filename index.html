@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KNF Pośrednik Kredytu Hipotecznego - Quiz Egzaminacyjny</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f5f7ff',
+                            100: '#ebf0fe',
+                            200: '#dae3fc',
+                            300: '#bdcef9',
+                            400: '#94b1f4',
+                            500: '#648cf0',
+                            600: '#406be6',
+                            700: '#2b52d4',
+                            800: '#233fae',
+                            900: '#1b328c',
+                            950: '#12205a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
+
+    <!-- Top Navigation -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="bg-brand-600 text-white p-2 rounded-xl shadow-md shadow-brand-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.967 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.967 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.967 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-slate-900 text-lg leading-tight">Egzamin PH</h1>
+                    <p class="text-xs font-semibold text-slate-500">Pośrednik Kredytu Hipotecznego KNF</p>
+                </div>
+            </div>
+            
+            <nav class="hidden md:flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
+                <button onclick="switchView('dashboard')" id="nav-dashboard" class="px-4 py-2 text-sm font-bold rounded-lg transition-all text-slate-700 bg-white shadow-sm">Dashboard</button>
+                <button onclick="switchView('study')" id="nav-study" class="px-4 py-2 text-sm font-bold rounded-lg transition-all text-slate-600 hover:text-slate-900">Tryb Nauki</button>
+                <button onclick="switchView('exam-setup')" id="nav-exam" class="px-4 py-2 text-sm font-bold rounded-lg transition-all text-slate-600 hover:text-slate-900">Symulacja Egzaminu</button>
+                <button onclick="switchView('bookmarks')" id="nav-bookmarks" class="px-4 py-2 text-sm font-bold rounded-lg transition-all text-slate-600 hover:text-slate-900">Ulubione (<span id="bookmark-count-nav">0</span>)</button>
+            </nav>
+
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-brand-50 text-brand-700 border border-brand-200">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brand-500 animate-pulse"></span>
+                    Baza: 356 pytań
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- DASHBOARD VIEW -->
+        <section id="view-dashboard" class="space-y-8 animate-fade-in">
+            <!-- Hero banner -->
+            <div class="bg-gradient-to-r from-brand-800 to-indigo-900 text-white rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-xl shadow-brand-100">
+                <div class="absolute -right-10 -bottom-10 opacity-10 text-white">
+                    <svg class="w-64 h-64" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                </div>
+                <div class="max-w-xl space-y-4">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Zdasz egzamin KNF za pierwszym razem!</h2>
+                    <p class="text-brand-100 text-sm sm:text-base leading-relaxed">
+                        Przygotowaliśmy inteligentny system nauki oparty na oficjalnych pytaniach egzaminacyjnych z lat 2018-2025. Trenuj w trybie nauki lub sprawdź się w pełnej symulacji egzaminu.
+                    </p>
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <button onclick="switchView('study')" class="bg-white text-brand-900 px-5 py-2.5 rounded-xl font-bold text-sm shadow-md hover:bg-slate-50 transition-all flex items-center gap-2">
+                            Zacznij naukę
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+                        </button>
+                        <button onclick="switchView('exam-setup')" class="bg-brand-700/50 border border-brand-500/30 text-white hover:bg-brand-700/70 px-5 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2">
+                            Przejdź do egzaminu
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="bg-blue-50 text-blue-600 p-3.5 rounded-xl">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Rozwiązane pytania</p>
+                        <h3 class="text-2xl font-black text-slate-800" id="stat-total-answered">0</h3>
+                        <p class="text-xs font-semibold text-slate-500"><span id="stat-answered-percent">0%</span> całej bazy</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="bg-emerald-50 text-emerald-600 p-3.5 rounded-xl">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Skuteczność</p>
+                        <h3 class="text-2xl font-black text-slate-800" id="stat-accuracy">0%</h3>
+                        <p class="text-xs font-semibold text-slate-500">poprawnych odpowiedzi</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="bg-amber-50 text-amber-600 p-3.5 rounded-xl">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Symulacje egzaminu</p>
+                        <h3 class="text-2xl font-black text-slate-800" id="stat-exams-taken">0</h3>
+                        <p class="text-xs font-semibold text-slate-500">zdawalność: <span id="stat-exam-pass-rate">0%</span></p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                    <div class="bg-rose-50 text-rose-600 p-3.5 rounded-xl">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.907c.961 0 1.367 1.242.583 1.83l-3.978 2.89a1 1 0 00-.364 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.977-2.89a1 1 0 00-1.175 0l-3.977 2.89c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.364-1.118l-3.976-2.89c-.784-.57-.378-1.83.582-1.83h4.907a1 1 0 00.95-.69l1.519-4.674z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Ulubione pytania</p>
+                        <h3 class="text-2xl font-black text-slate-800" id="stat-bookmarks">0</h3>
+                        <p class="text-xs font-semibold text-slate-500">zapisane na później</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard panels -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Progress & Recommendations -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6 lg:col-span-2">
+                    <h3 class="font-extrabold text-slate-900 text-lg">Podział bazy pytań</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-xs font-bold text-slate-500 mb-1.5">
+                                <span>Pytania z lat 2024 - 2025</span>
+                                <span id="progress-text-24-25">0 / 150 (0%)</span>
+                            </div>
+                            <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                                <div id="progress-bar-24-25" class="bg-brand-500 h-full rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-bold text-slate-500 mb-1.5">
+                                <span>Pytania z lat 2018 - 2023</span>
+                                <span id="progress-text-18-23">0 / 206 (0%)</span>
+                            </div>
+                            <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                                <div id="progress-bar-18-23" class="bg-indigo-400 h-full rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-bold text-slate-500 mb-1.5">
+                                <span>Pytania z ustaw (uzupełniające)</span>
+                                <span id="progress-text-statutes">0 / 40 (0%)</span>
+                            </div>
+                            <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                                <div id="progress-bar-statutes" class="bg-emerald-550 h-full rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-slate-100 pt-6 space-y-3">
+                        <h4 class="font-bold text-slate-800 text-sm">Zasady Egzaminu Państwowego KNF:</h4>
+                        <ul class="text-xs text-slate-600 space-y-2.5 list-disc pl-4 font-medium leading-relaxed">
+                            <li><strong>Czas trwania:</strong> 110 minut.</li>
+                            <li><strong>Struktura testu:</strong> 50 pytań jednokrotnego wyboru (A, B, C).</li>
+                            <li><strong>Punktacja:</strong> 1 punkt za poprawną odpowiedź, 0 punktów za błędną lub brak odpowiedzi. Brak punktów ujemnych.</li>
+                            <li><strong>Warunek zaliczenia:</strong> Uzyskanie co najmniej 35 punktów (70% poprawnych odpowiedzi).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Recent results sidebar -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-extrabold text-slate-900 text-lg mb-4">Ostatnie podejścia</h3>
+                        <div class="space-y-3" id="recent-exams-container">
+                            <!-- Populated dynamically -->
+                            <div class="text-center py-8 text-slate-400 text-sm font-medium">
+                                <svg class="w-12 h-12 mx-auto mb-2 text-slate-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                Brak podejść do egzaminu
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button onclick="switchView('exam-setup')" class="w-full bg-brand-600 hover:bg-brand-700 text-white py-3 rounded-xl font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 mt-4">
+                        Uruchom egzamin próbny
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STUDY VIEW -->
+        <section id="view-study" class="hidden space-y-6 animate-fade-in">
+            <!-- Sidebar/Filters + Question Container -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+                
+                <!-- Filters panel -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-5 lg:sticky lg:top-24">
+                    <h3 class="font-extrabold text-slate-900 text-base">Filtrowanie bazy</h3>
+                    
+                    <div class="space-y-4 text-sm font-medium">
+                        <!-- Search input -->
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Szukaj słowa kluczowego</label>
+                            <div class="relative">
+                                <input type="text" id="search-input" oninput="applyStudyFilters()" placeholder="Wpisz np. hipoteka..." class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-sm font-medium">
+                                <svg class="w-4 h-4 absolute left-3 top-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            </div>
+                        </div>
+
+                        <!-- Year filters -->
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Zakres lat</label>
+                            <div class="space-y-1.5" id="filter-years">
+                                <label class="flex items-center gap-2.5 px-3 py-2 bg-slate-50 rounded-lg border border-slate-100 hover:bg-slate-100/50 cursor-pointer transition-all">
+                                    <input type="checkbox" value="all" id="year-all" checked onchange="toggleYearFilter('all')" class="rounded border-slate-300 text-brand-600 focus:ring-brand-500 w-4 h-4">
+                                    <span>Wszystkie lata</span>
+                                </label>
+                                <label class="flex items-center gap-2.5 px-3 py-2 bg-slate-50 rounded-lg border border-slate-100 hover:bg-slate-100/50 cursor-pointer transition-all">
+                                    <input type="checkbox" value="2024-2025" id="year-24-25" onchange="toggleYearFilter('24-25')" class="rounded border-slate-300 text-brand-600 focus:ring-brand-500 w-4 h-4">
+                                    <span>2024 - 2025 (150)</span>
+                                </label>
+                                <label class="flex items-center gap-2.5 px-3 py-2 bg-slate-50 rounded-lg border border-slate-100 hover:bg-slate-100/50 cursor-pointer transition-all">
+                                    <input type="checkbox" value="2018-2023" id="year-18-23" onchange="toggleYearFilter('18-23')" class="rounded border-slate-300 text-brand-600 focus:ring-brand-500 w-4 h-4">
+                                    <span>2018 - 2023 (206)</span>
+                                </label>
+                                <label class="flex items-center gap-2.5 px-3 py-2 bg-slate-50 rounded-lg border border-slate-100 hover:bg-slate-100/50 cursor-pointer transition-all">
+                                    <input type="checkbox" value="Ustawy (Uzupełniające)" id="year-statutes" onchange="toggleYearFilter('statutes')" class="rounded border-slate-300 text-brand-600 focus:ring-brand-500 w-4 h-4">
+                                    <span>Pytania z ustaw (40)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Filter bookmarks -->
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Status odpowiedzi</label>
+                            <div class="space-y-1.5">
+                                <label class="flex items-center gap-2.5 px-3 py-2 bg-slate-50 rounded-lg border border-slate-100 hover:bg-slate-100/50 cursor-pointer transition-all">
+                                    <input type="radio" name="status-filter" value="all" checked onchange="applyStudyFilters()" class="text-brand-600 focus:ring-brand-500 w-4 h-4 border-slate-300">
+                                    <span>Wszystkie pytania</span>
+                                </label>
+                                <label class="flex items-center gap-2.5 px-3 py-2 bg-slate-50 rounded-lg border border-slate-100 hover:bg-slate-100/50 cursor-pointer transition-all">
+                                    <input type="radio" name="status-filter" value="unanswered" onchange="applyStudyFilters()" class="text-brand-600 focus:ring-brand-500 w-4 h-4 border-slate-300">
+                                    <span>Nierozwiązane</span>
+                                </label>
+                                <label class="flex items-center gap-2.5 px-3 py-2 bg-slate-50 rounded-lg border border-slate-100 hover:bg-slate-100/50 cursor-pointer transition-all">
+                                    <input type="radio" name="status-filter" value="incorrect" onchange="applyStudyFilters()" class="text-brand-600 focus:ring-brand-500 w-4 h-4 border-slate-300">
+                                    <span>Błędnie rozwiązane</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Study view question display -->
+                <div class="lg:col-span-3 space-y-6">
+                    <div class="flex justify-between items-center bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm">
+                        <div class="text-sm font-bold text-slate-500">
+                            Filtrowany wynik: <span class="text-slate-800" id="study-filtered-count">0</span> z <span id="study-total-count">356</span> pytań
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <button onclick="prevStudyQuestion()" class="p-2 hover:bg-slate-100 rounded-xl transition-all text-slate-600 disabled:opacity-30 disabled:pointer-events-none" id="study-btn-prev">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"></path></svg>
+                            </button>
+                            <div class="px-3 text-sm font-extrabold text-slate-800" id="study-current-index">1 / 1</div>
+                            <button onclick="nextStudyQuestion()" class="p-2 hover:bg-slate-100 rounded-xl transition-all text-slate-600 disabled:opacity-30 disabled:pointer-events-none" id="study-btn-next">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Question Card -->
+                    <div id="study-question-card" class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6 relative">
+                        <!-- Top tags / actions -->
+                        <div class="flex justify-between items-start gap-4">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-brand-50 text-brand-700 text-xs font-bold rounded-lg border border-brand-100" id="study-question-tag-year">2024-2025</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-lg" id="study-question-tag-id">Pytanie 1</span>
+                            </div>
+                            <button onclick="toggleBookmarkStudy()" class="text-slate-400 hover:text-rose-500 transition-all" id="study-bookmark-btn">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" id="study-bookmark-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.907c.961 0 1.367 1.242.583 1.83l-3.978 2.89a1 1 0 00-.364 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.977-2.89a1 1 0 00-1.175 0l-3.977 2.89c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.364-1.118l-3.976-2.89c-.784-.57-.378-1.83.582-1.83h4.907a1 1 0 00.95-.69l1.519-4.674z"></path></svg>
+                            </button>
+                        </div>
+
+                        <!-- Question text -->
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-850 leading-snug" id="study-question-text">Pytanie...</h2>
+
+                        <!-- Answer options -->
+                        <div class="grid grid-cols-1 gap-3.5" id="study-options-container">
+                            <!-- Option A -->
+                            <button onclick="selectStudyAnswer('A')" id="study-option-A" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:bg-slate-50/50 hover:border-slate-300 transition-all font-medium flex gap-3 text-sm">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-lg bg-slate-100 flex items-center justify-center font-bold text-slate-500">A</span>
+                                <span id="study-option-A-text">...</span>
+                            </button>
+                            <!-- Option B -->
+                            <button onclick="selectStudyAnswer('B')" id="study-option-B" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:bg-slate-50/50 hover:border-slate-300 transition-all font-medium flex gap-3 text-sm">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-lg bg-slate-100 flex items-center justify-center font-bold text-slate-500">B</span>
+                                <span id="study-option-B-text">...</span>
+                            </button>
+                            <!-- Option C -->
+                            <button onclick="selectStudyAnswer('C')" id="study-option-C" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:bg-slate-50/50 hover:border-slate-300 transition-all font-medium flex gap-3 text-sm">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-lg bg-slate-100 flex items-center justify-center font-bold text-slate-500">C</span>
+                                <span id="study-option-C-text">...</span>
+                            </button>
+                        </div>
+
+                        <!-- Explanatory feedback (initially hidden) -->
+                        <div id="study-explanation" class="hidden border-t border-slate-100 pt-6 animate-fade-in">
+                            <div class="flex gap-3 p-4 rounded-xl" id="study-explanation-box">
+                                <div class="flex-shrink-0" id="study-explanation-icon">
+                                    <!-- Dynamic Icon -->
+                                </div>
+                                <div>
+                                    <h4 class="font-extrabold text-sm" id="study-explanation-title">Prawidłowo!</h4>
+                                    <p class="text-xs font-semibold mt-1 leading-relaxed" id="study-explanation-desc">
+                                        Prawidłowa odpowiedź to...
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXAM SETUP VIEW -->
+        <section id="view-exam-setup" class="hidden max-w-2xl mx-auto space-y-6 animate-fade-in">
+            <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                <div class="text-center space-y-2">
+                    <div class="bg-indigo-50 text-indigo-600 p-4 rounded-2xl inline-block">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl font-black text-slate-900">Symulator Egzaminu KNF</h2>
+                    <p class="text-slate-500 font-semibold text-sm max-w-md mx-auto">Przetestuj swoją wiedzę w warunkach identycznych z oficjalnym egzaminem państwowym.</p>
+                </div>
+
+                <div class="border-y border-slate-100 py-6 space-y-4 font-medium text-slate-600 text-sm">
+                    <h3 class="font-bold text-slate-800 text-base mb-2">Szczegóły symulacji:</h3>
+                    <div class="flex items-center gap-3">
+                        <span class="p-2 bg-slate-100 rounded-lg text-slate-600">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </span>
+                        <span>Czas trwania: <strong>110 minut</strong> (ciągły odliczanie wstecz)</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="p-2 bg-slate-100 rounded-lg text-slate-600">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                        </span>
+                        <span>Liczba pytań: <strong>50 losowych pytań</strong> jednokrotnego wyboru</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="p-2 bg-slate-100 rounded-lg text-slate-600">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </span>
+                        <span>Warunek zdania: <strong>minimum 35 poprawnych odpowiedzi (70%)</strong></span>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <label class="text-xs font-bold text-slate-400 uppercase tracking-wider block">Wybierz zakres pytań</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm font-medium">
+                        <label class="p-4 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer flex items-center justify-between transition-all" id="exam-scope-all-box">
+                            <div>
+                                <span class="font-extrabold block text-slate-800">Dowolne lata</span>
+                                <span class="text-xs text-slate-500">Cała baza pytań</span>
+                            </div>
+                            <input type="radio" name="exam-scope" value="all" checked class="text-brand-600 focus:ring-brand-500 w-5 h-5 border-slate-300">
+                        </label>
+                        
+                        <label class="p-4 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer flex items-center justify-between transition-all" id="exam-scope-24-25-box">
+                            <div>
+                                <span class="font-extrabold block text-slate-800">Tylko 2024 - 2025</span>
+                                <span class="text-xs text-slate-500">Ostatnie aktualne pytania</span>
+                            </div>
+                            <input type="radio" name="exam-scope" value="2024-2025" class="text-brand-600 focus:ring-brand-500 w-5 h-5 border-slate-300">
+                        </label>
+
+                        <label class="p-4 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer flex items-center justify-between transition-all" id="exam-scope-statutes-box">
+                            <div>
+                                <span class="font-extrabold block text-slate-800">Tylko Ustawy</span>
+                                <span class="text-xs text-slate-500">Uzupełniające (40)</span>
+                            </div>
+                            <input type="radio" name="exam-scope" value="Ustawy (Uzupełniające)" class="text-brand-600 focus:ring-brand-500 w-5 h-5 border-slate-300">
+                        </label>
+                    </div>
+                </div>
+
+                <button onclick="startExam()" class="w-full bg-brand-600 hover:bg-brand-700 text-white py-4 rounded-xl font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2">
+                    Rozpocznij Egzamin
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- ACTIVE EXAM VIEW -->
+        <section id="view-exam-active" class="hidden space-y-6 animate-fade-in">
+            <!-- Exam Header -->
+            <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="flex items-center gap-3">
+                    <div class="bg-slate-100 px-3 py-1.5 rounded-xl font-black text-slate-700 text-sm">
+                        Egzamin próbny
+                    </div>
+                    <div class="text-sm font-bold text-slate-500">
+                        Pytanie <span class="text-slate-800 font-extrabold" id="exam-current-idx-text">1 / 50</span>
+                    </div>
+                </div>
+
+                <!-- Timer -->
+                <div class="flex items-center justify-center gap-2 px-5 py-2.5 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl font-extrabold text-sm sm:self-center" id="exam-timer-box">
+                    <svg class="w-4 h-4 animate-spin-slow" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span id="exam-timer">110:00</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+                <!-- Question map grid -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4 lg:order-last">
+                    <div class="flex justify-between items-center mb-1">
+                        <h3 class="font-extrabold text-slate-900 text-sm">Arkusze pytań</h3>
+                        <span class="text-xs font-bold text-slate-400" id="exam-answered-count">0 / 50</span>
+                    </div>
+                    <!-- 50 question circles -->
+                    <div class="grid grid-cols-5 gap-2" id="exam-question-map">
+                        <!-- Populated dynamically -->
+                    </div>
+
+                    <button onclick="confirmFinishExam()" class="w-full bg-rose-600 hover:bg-rose-700 text-white py-3 rounded-xl font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 mt-4">
+                        Zakończ Egzamin
+                    </button>
+                </div>
+
+                <!-- Active question card -->
+                <div class="lg:col-span-3 space-y-6">
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                        <div class="flex justify-between items-start gap-4">
+                            <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-lg" id="exam-question-tag-id">Pytanie 1</span>
+                            <button onclick="toggleBookmarkExam()" class="text-slate-400 hover:text-rose-500 transition-all" id="exam-bookmark-btn">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" id="exam-bookmark-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.907c.961 0 1.367 1.242.583 1.83l-3.978 2.89a1 1 0 00-.364 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.977-2.89a1 1 0 00-1.175 0l-3.977 2.89c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.364-1.118l-3.976-2.89c-.784-.57-.378-1.83.582-1.83h4.907a1 1 0 00.95-.69l1.519-4.674z"></path></svg>
+                            </button>
+                        </div>
+
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-850 leading-snug" id="exam-question-text">Pytanie...</h2>
+
+                        <div class="grid grid-cols-1 gap-3.5">
+                            <!-- Option A -->
+                            <button onclick="selectExamAnswer('A')" id="exam-option-A" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:bg-slate-50/50 hover:border-slate-300 transition-all font-medium flex gap-3 text-sm">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-lg bg-slate-100 flex items-center justify-center font-bold text-slate-500">A</span>
+                                <span id="exam-option-A-text">...</span>
+                            </button>
+                            <!-- Option B -->
+                            <button onclick="selectExamAnswer('B')" id="exam-option-B" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:bg-slate-50/50 hover:border-slate-300 transition-all font-medium flex gap-3 text-sm">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-lg bg-slate-100 flex items-center justify-center font-bold text-slate-500">B</span>
+                                <span id="exam-option-B-text">...</span>
+                            </button>
+                            <!-- Option C -->
+                            <button onclick="selectExamAnswer('C')" id="exam-option-C" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:bg-slate-50/50 hover:border-slate-300 transition-all font-medium flex gap-3 text-sm">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-lg bg-slate-100 flex items-center justify-center font-bold text-slate-500">C</span>
+                                <span id="exam-option-C-text">...</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Next/Prev buttons -->
+                    <div class="flex justify-between items-center">
+                        <button onclick="prevExamQuestion()" id="exam-btn-prev" class="px-5 py-3 rounded-xl border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all font-bold text-slate-700 text-sm flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"></path></svg>
+                            Poprzednie
+                        </button>
+                        <button onclick="nextExamQuestion()" id="exam-btn-next" class="px-5 py-3 rounded-xl border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all font-bold text-slate-700 text-sm flex items-center gap-2">
+                            Następne
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXAM RESULT VIEW -->
+        <section id="view-exam-result" class="hidden space-y-8 animate-fade-in">
+            <!-- Results Panel -->
+            <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm max-w-3xl mx-auto text-center space-y-6">
+                <div id="result-status-box" class="p-6 rounded-2xl inline-block">
+                    <!-- Passed or Failed Trophies/Warning icons -->
+                </div>
+                
+                <div class="space-y-2">
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-900" id="result-title">Wynik Egzaminu</h2>
+                    <p class="text-slate-500 font-semibold text-sm" id="result-subtitle">Symulacja ukończona</p>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 py-6 border-y border-slate-100 text-sm font-medium">
+                    <div class="space-y-1">
+                        <span class="text-slate-400 font-bold uppercase text-xs tracking-wider block">Twój Wynik</span>
+                        <span class="text-2xl font-black text-slate-800" id="result-score">0 / 50</span>
+                    </div>
+                    <div class="space-y-1">
+                        <span class="text-slate-400 font-bold uppercase text-xs tracking-wider block">Procentowo</span>
+                        <span class="text-2xl font-black text-slate-800" id="result-percent">0%</span>
+                    </div>
+                    <div class="space-y-1">
+                        <span class="text-slate-400 font-bold uppercase text-xs tracking-wider block">Czas podejścia</span>
+                        <span class="text-2xl font-black text-slate-800" id="result-time-taken">0:00</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-4 justify-center pt-2">
+                    <button onclick="switchView('dashboard')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-6 py-3 rounded-xl font-bold text-sm transition-all">
+                        Powrót do pulpitu
+                    </button>
+                    <button onclick="switchView('exam-setup')" class="bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-md transition-all">
+                        Spróbuj ponownie
+                    </button>
+                </div>
+            </div>
+
+            <!-- Detailed Answers Review -->
+            <div class="max-w-4xl mx-auto space-y-6">
+                <h3 class="font-extrabold text-slate-900 text-lg">Przegląd odpowiedzi</h3>
+                <div class="space-y-4" id="exam-results-review-container">
+                    <!-- Populated dynamically with each of the 50 questions, showing user's choice and the correct choice -->
+                </div>
+            </div>
+        </section>
+
+        <!-- BOOKMARKS VIEW -->
+        <section id="view-bookmarks" class="hidden space-y-6 animate-fade-in">
+            <div class="flex justify-between items-center bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                <div>
+                    <h2 class="text-xl font-extrabold text-slate-900">Ulubione pytania</h2>
+                    <p class="text-xs font-semibold text-slate-500">Zapisane trudne pytania do powtórki</p>
+                </div>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200" id="bookmarks-badge-count">
+                    0 pytań
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6" id="bookmarks-list-container">
+                <!-- Dynamically populated or showing empty message -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-slate-500 text-xs font-semibold space-y-2 mt-12">
+        <p>Aplikacja Quizowa dla Pośredników Kredytu Hipotecznego KNF</p>
+        <p class="text-slate-400">Wyprodukowano z dbałością o jakość bazując na oficjalnych danych UKNF z lat 2018 - 2025.</p>
+    </footer>
+
+    <!-- Offline Database Import -->
+    <script src="questions.js"></script>
+
+    <!-- App Logic -->
+    <script>
+        // App State
+        let questions = []; // Raw database loaded from questions.js
+        let bookmarks = JSON.parse(localStorage.getItem('knf_bookmarks') || '[]');
+        let userStats = JSON.parse(localStorage.getItem('knf_stats') || '{"answered": {}, "incorrect": {}, "totalAnswered": 0, "correctAnswered": 0, "examsTaken": 0, "examsPassed": 0, "examHistory": []}');
+        
+        // View-specific state
+        let currentView = 'dashboard';
+        let filteredStudyQuestions = [];
+        let currentStudyIdx = 0;
+        let studyAutoAdvanceTimeout = null;
+        let activeExamQuestions = [];
+        let activeExamAnswers = {}; // q_idx -> answer
+        let activeExamBookmarks = []; // q_idx -> true
+        let currentExamIdx = 0;
+        let examTimerInterval = null;
+        let examSecondsRemaining = 110 * 60;
+
+        // Year filter state
+        let activeYears = ['2018-2023', '2024-2025', 'Ustawy (Uzupełniające)'];
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            // Load questions from global window variable defined in questions.js
+            if (window.KNF_QUESTIONS && window.KNF_QUESTIONS.length > 0) {
+                questions = window.KNF_QUESTIONS;
+            } else {
+                alert("Błąd: Nie udało się wczytać bazy pytań questions.js.");
+            }
+            
+            updateDashboardStats();
+            updateBookmarkCountNav();
+            
+            // Build study questions
+            applyStudyFilters();
+        });
+
+        // Navigation
+        function switchView(viewName) {
+            // Cancel timer if moving away from active exam (with confirm)
+            if (currentView === 'exam-active' && viewName !== 'exam-active') {
+                if (!confirm("Opuścisz aktywną symulację egzaminu. Twoje dotychczasowe odpowiedzi zostaną utracone. Czy chcesz kontynuować?")) {
+                    return;
+                }
+                clearInterval(examTimerInterval);
+            }
+
+            // Hide all views
+            const views = ['dashboard', 'study', 'exam-setup', 'exam-active', 'exam-result', 'bookmarks'];
+            views.forEach(v => {
+                document.getElementById(`view-${v}`).classList.add('hidden');
+            });
+
+            // Update nav styles
+            const navs = {
+                'dashboard': 'nav-dashboard',
+                'study': 'nav-study',
+                'exam-setup': 'nav-exam',
+                'exam-active': 'nav-exam',
+                'exam-result': 'nav-exam',
+                'bookmarks': 'nav-bookmarks'
+            };
+            
+            Object.keys(navs).forEach(key => {
+                const btn = document.getElementById(navs[key]);
+                if (btn) {
+                    if (key === viewName || (key === 'exam-setup' && ['exam-active', 'exam-result'].includes(viewName))) {
+                        btn.className = "px-4 py-2 text-sm font-bold rounded-lg transition-all text-slate-700 bg-white shadow-sm";
+                    } else {
+                        btn.className = "px-4 py-2 text-sm font-bold rounded-lg transition-all text-slate-600 hover:text-slate-900";
+                    }
+                }
+            });
+
+            // Show current view
+            document.getElementById(`view-${viewName}`).classList.remove('hidden');
+            currentView = viewName;
+
+            // Page-specific setup
+            if (viewName === 'dashboard') {
+                updateDashboardStats();
+            } else if (viewName === 'bookmarks') {
+                renderBookmarksView();
+            } else if (viewName === 'study') {
+                renderStudyQuestion();
+            }
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Bookmark logic
+        function toggleBookmarkStudy() {
+            if (filteredStudyQuestions.length === 0) return;
+            const q = filteredStudyQuestions[currentStudyIdx];
+            toggleBookmarkId(q.id, q.year_group);
+            updateBookmarkButtonStudy();
+            updateBookmarkCountNav();
+        }
+
+        function toggleBookmarkExam() {
+            if (activeExamQuestions.length === 0) return;
+            const q = activeExamQuestions[currentExamIdx];
+            toggleBookmarkId(q.id, q.year_group);
+            updateBookmarkButtonExam();
+            updateBookmarkCountNav();
+        }
+
+        function toggleBookmarkId(id, year_group) {
+            const index = bookmarks.findIndex(b => b.id === id && b.year_group === year_group);
+            if (index > -1) {
+                bookmarks.splice(index, 1);
+            } else {
+                bookmarks.push({ id, year_group });
+            }
+            localStorage.setItem('knf_bookmarks', JSON.stringify(bookmarks));
+        }
+
+        function isBookmarked(id, year_group) {
+            return bookmarks.some(b => b.id === id && b.year_group === year_group);
+        }
+
+        function updateBookmarkButtonStudy() {
+            if (filteredStudyQuestions.length === 0) return;
+            const q = filteredStudyQuestions[currentStudyIdx];
+            const btn = document.getElementById('study-bookmark-btn');
+            const icon = document.getElementById('study-bookmark-icon');
+            if (isBookmarked(q.id, q.year_group)) {
+                btn.className = "text-rose-600 hover:text-rose-700 transition-all animate-pulse";
+                icon.setAttribute('fill', 'currentColor');
+            } else {
+                btn.className = "text-slate-400 hover:text-rose-500 transition-all";
+                icon.setAttribute('fill', 'none');
+            }
+        }
+
+        function updateBookmarkButtonExam() {
+            if (activeExamQuestions.length === 0) return;
+            const q = activeExamQuestions[currentExamIdx];
+            const btn = document.getElementById('exam-bookmark-btn');
+            const icon = document.getElementById('exam-bookmark-icon');
+            if (isBookmarked(q.id, q.year_group)) {
+                btn.className = "text-rose-600 hover:text-rose-700 transition-all";
+                icon.setAttribute('fill', 'currentColor');
+            } else {
+                btn.className = "text-slate-400 hover:text-rose-500 transition-all";
+                icon.setAttribute('fill', 'none');
+            }
+        }
+
+        function updateBookmarkCountNav() {
+            document.getElementById('bookmark-count-nav').innerText = bookmarks.length;
+        }
+
+        // Stats tracking
+        function recordAnswer(q_id, year_group, isCorrect) {
+            const key = `${year_group}_${q_id}`;
+            const stats = userStats;
+            
+            if (!stats.answered[key]) {
+                stats.totalAnswered += 1;
+            }
+            
+            stats.answered[key] = isCorrect ? 'correct' : 'incorrect';
+            
+            if (isCorrect) {
+                if (stats.incorrect[key]) {
+                    delete stats.incorrect[key];
+                }
+            } else {
+                stats.incorrect[key] = true;
+            }
+
+            // Recompute total correct based on answers object
+            let correctCount = 0;
+            Object.keys(stats.answered).forEach(k => {
+                if (stats.answered[k] === 'correct') correctCount++;
+            });
+            stats.correctAnswered = correctCount;
+
+            userStats = stats;
+            localStorage.setItem('knf_stats', JSON.stringify(stats));
+        }
+
+        function getQuestionStatus(q_id, year_group) {
+            const key = `${year_group}_${q_id}`;
+            return userStats.answered[key] || 'unanswered';
+        }
+
+        function updateDashboardStats() {
+            document.getElementById('stat-total-answered').innerText = userStats.totalAnswered;
+            const totalInDatabase = questions.length;
+            const percent = Math.round((userStats.totalAnswered / totalInDatabase) * 100) || 0;
+            document.getElementById('stat-answered-percent').innerText = `${percent}%`;
+
+            // Accuracy
+            let acc = 0;
+            if (userStats.totalAnswered > 0) {
+                acc = Math.round((userStats.correctAnswered / userStats.totalAnswered) * 100);
+            }
+            document.getElementById('stat-accuracy').innerText = `${acc}%`;
+
+            // Exams
+            document.getElementById('stat-exams-taken').innerText = userStats.examsTaken;
+            let passRate = 0;
+            if (userStats.examsTaken > 0) {
+                passRate = Math.round((userStats.examsPassed / userStats.examsTaken) * 100);
+            }
+            document.getElementById('stat-exam-pass-rate').innerText = `${passRate}%`;
+
+            // Bookmarks
+            document.getElementById('stat-bookmarks').innerText = bookmarks.length;
+
+            // Splits
+            const q24_25 = questions.filter(q => q.year_group === '2024-2025');
+            const q18_23 = questions.filter(q => q.year_group === '2018-2023');
+            const qStatutes = questions.filter(q => q.year_group === 'Ustawy (Uzupełniające)');
+            
+            let solved24_25 = 0;
+            q24_25.forEach(q => {
+                if (getQuestionStatus(q.id, q.year_group) !== 'unanswered') solved24_25++;
+            });
+            let solved18_23 = 0;
+            q18_23.forEach(q => {
+                if (getQuestionStatus(q.id, q.year_group) !== 'unanswered') solved18_23++;
+            });
+            let solvedStatutes = 0;
+            qStatutes.forEach(q => {
+                if (getQuestionStatus(q.id, q.year_group) !== 'unanswered') solvedStatutes++;
+            });
+
+            const percent24_25 = Math.round((solved24_25 / q24_25.length) * 100) || 0;
+            const percent18_23 = Math.round((solved18_23 / q18_23.length) * 100) || 0;
+            const percentStatutes = Math.round((solvedStatutes / qStatutes.length) * 100) || 0;
+
+            document.getElementById('progress-text-24-25').innerText = `${solved24_25} / ${q24_25.length} (${percent24_25}%)`;
+            document.getElementById('progress-bar-24-25').style.width = `${percent24_25}%`;
+
+            document.getElementById('progress-text-18-23').innerText = `${solved18_23} / ${q18_23.length} (${percent18_23}%)`;
+            document.getElementById('progress-bar-18-23').style.width = `${percent18_23}%`;
+
+            document.getElementById('progress-text-statutes').innerText = `${solvedStatutes} / ${qStatutes.length} (${percentStatutes}%)`;
+            document.getElementById('progress-bar-statutes').style.width = `${percentStatutes}%`;
+
+            // Recent history
+            const historyContainer = document.getElementById('recent-exams-container');
+            if (userStats.examHistory && userStats.examHistory.length > 0) {
+                historyContainer.innerHTML = '';
+                // Take latest 3
+                const latest = userStats.examHistory.slice(-3).reverse();
+                latest.forEach((item, i) => {
+                    const totalQuestions = item.total || 50;
+                    const passingScore = Math.ceil(totalQuestions * 0.7);
+                    const isPassed = item.score >= passingScore;
+                    const dateStr = item.date ? new Date(item.date).toLocaleDateString('pl-PL') : 'Egzamin';
+                    const passedBadge = isPassed 
+                        ? `<span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded text-xs font-bold">Zaliczony</span>`
+                        : `<span class="bg-rose-50 text-rose-700 border border-rose-200 px-2 py-0.5 rounded text-xs font-bold">Niezdany</span>`;
+                    
+                    historyContainer.innerHTML += `
+                        <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium">
+                            <div class="space-y-0.5">
+                                <div class="flex items-center gap-2">
+                                    <span class="font-extrabold text-slate-800">${item.score} / ${totalQuestions}</span>
+                                    ${passedBadge}
+                                </div>
+                                <span class="text-xs text-slate-400 font-bold">${dateStr} • Czas: ${item.timeTaken || 'n/a'}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        // STUDY MODE ENGINE
+        function toggleYearFilter(yearType) {
+            const allCheckbox = document.getElementById('year-all');
+            const y24_25 = document.getElementById('year-24-25');
+            const y18_23 = document.getElementById('year-18-23');
+            const yStatutes = document.getElementById('year-statutes');
+
+            if (yearType === 'all') {
+                if (allCheckbox.checked) {
+                    y24_25.checked = false;
+                    y18_23.checked = false;
+                    yStatutes.checked = false;
+                    activeYears = ['2018-2023', '2024-2025', 'Ustawy (Uzupełniające)'];
+                } else {
+                    activeYears = [];
+                }
+            } else {
+                allCheckbox.checked = false;
+                activeYears = [];
+                if (y24_25.checked) activeYears.push('2024-2025');
+                if (y18_23.checked) activeYears.push('2018-2023');
+                if (yStatutes.checked) activeYears.push('Ustawy (Uzupełniające)');
+                
+                if (activeYears.length === 3 || activeYears.length === 0) {
+                    allCheckbox.checked = true;
+                    y24_25.checked = false;
+                    y18_23.checked = false;
+                    yStatutes.checked = false;
+                    activeYears = ['2018-2023', '2024-2025', 'Ustawy (Uzupełniające)'];
+                }
+            }
+            applyStudyFilters();
+        }
+
+        function applyStudyFilters() {
+            const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
+            const statusFilter = document.querySelector('input[name="status-filter"]:checked').value;
+
+            filteredStudyQuestions = questions.filter(q => {
+                // Filter by year group
+                if (!activeYears.includes(q.year_group)) return false;
+
+                // Filter by keyword
+                if (searchVal) {
+                    const matchesText = q.question.toLowerCase().includes(searchVal) ||
+                                       q.a.toLowerCase().includes(searchVal) ||
+                                       q.b.toLowerCase().includes(searchVal) ||
+                                       q.c.toLowerCase().includes(searchVal);
+                    if (!matchesText) return false;
+                }
+
+                // Filter by status
+                const status = getQuestionStatus(q.id, q.year_group);
+                if (statusFilter === 'unanswered' && status !== 'unanswered') return false;
+                if (statusFilter === 'incorrect' && status !== 'incorrect') return false;
+
+                return true;
+            });
+
+            currentStudyIdx = 0;
+            
+            // UI updates
+            document.getElementById('study-total-count').innerText = questions.length;
+            document.getElementById('study-filtered-count').innerText = filteredStudyQuestions.length;
+            
+            renderStudyQuestion();
+        }
+
+        function renderStudyQuestion() {
+            const container = document.getElementById('study-question-card');
+            if (filteredStudyQuestions.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-16 text-slate-400">
+                        <svg class="w-16 h-16 mx-auto mb-4 text-slate-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        <h3 class="font-extrabold text-slate-800 text-lg">Brak pasujących pytań</h3>
+                        <p class="text-xs font-semibold text-slate-500 mt-1">Zmień parametry filtrów i wyszukiwania.</p>
+                    </div>
+                `;
+                document.getElementById('study-current-index').innerText = "0 / 0";
+                document.getElementById('study-btn-prev').disabled = true;
+                document.getElementById('study-btn-next').disabled = true;
+                return;
+            }
+
+            // Clear any scheduled auto-advance timeout
+            clearTimeout(studyAutoAdvanceTimeout);
+
+            // Restore basic template
+            container.innerHTML = `
+                <div class="flex justify-between items-start gap-4">
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-brand-50 text-brand-700 text-xs font-bold rounded-lg border border-brand-100" id="study-question-tag-year">...</span>
+                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-lg" id="study-question-tag-id">...</span>
+                    </div>
+                    <button onclick="toggleBookmarkStudy()" class="text-slate-400 hover:text-rose-500 transition-all" id="study-bookmark-btn">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" id="study-bookmark-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.907c.961 0 1.367 1.242.583 1.83l-3.978 2.89a1 1 0 00-.364 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.977-2.89a1 1 0 00-1.175 0l-3.977 2.89c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.364-1.118l-3.976-2.89c-.784-.57-.378-1.83.582-1.83h4.907a1 1 0 00.95-.69l1.519-4.674z"></path></svg>
+                    </button>
+                </div>
+                <h2 class="text-lg sm:text-xl font-bold text-slate-850 leading-snug" id="study-question-text">...</h2>
+                <div class="grid grid-cols-1 gap-3.5" id="study-options-container"></div>
+                <div id="study-explanation" class="hidden border-t border-slate-100 pt-6 animate-fade-in space-y-4"></div>
+            `;
+
+            const q = filteredStudyQuestions[currentStudyIdx];
+            document.getElementById('study-question-text').innerText = q.question;
+            document.getElementById('study-question-tag-year').innerText = q.year_group;
+            document.getElementById('study-question-tag-id').innerText = `ID: ${q.id}`;
+            document.getElementById('study-current-index').innerText = `${currentStudyIdx + 1} / ${filteredStudyQuestions.length}`;
+
+            // Buttons
+            document.getElementById('study-btn-prev').disabled = currentStudyIdx === 0;
+            document.getElementById('study-btn-next').disabled = currentStudyIdx === filteredStudyQuestions.length - 1;
+
+            updateBookmarkButtonStudy();
+
+            // Options
+            const containerOptions = document.getElementById('study-options-container');
+            containerOptions.innerHTML = '';
+            
+            const ops = ['A', 'B', 'C'];
+            ops.forEach(opt => {
+                const optKey = opt.toLowerCase();
+                const text = q[optKey];
+                
+                containerOptions.innerHTML += `
+                    <button onclick="selectStudyAnswer('${opt}')" id="study-option-${opt}" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:bg-slate-50/50 hover:border-slate-300 transition-all font-medium flex gap-3 text-sm">
+                        <span class="flex-shrink-0 w-6 h-6 rounded-lg bg-slate-100 flex items-center justify-center font-bold text-slate-500" id="study-option-${opt}-badge">${opt}</span>
+                        <span>${text}</span>
+                    </button>
+                `;
+            });
+        }
+
+        function prevStudyQuestion() {
+            if (currentStudyIdx > 0) {
+                currentStudyIdx--;
+                renderStudyQuestion();
+            }
+        }
+
+        function nextStudyQuestion() {
+            if (currentStudyIdx < filteredStudyQuestions.length - 1) {
+                currentStudyIdx++;
+                renderStudyQuestion();
+            }
+        }
+
+        function selectStudyAnswer(selectedOpt) {
+            const q = filteredStudyQuestions[currentStudyIdx];
+            const correctOpt = q.answer;
+            const isCorrect = (selectedOpt === correctOpt);
+            
+            // Record answer for stats
+            recordAnswer(q.id, q.year_group, isCorrect);
+
+            // Highlight chosen options
+            const options = ['A', 'B', 'C'];
+            options.forEach(opt => {
+                const btn = document.getElementById(`study-option-${opt}`);
+                const badge = document.getElementById(`study-option-${opt}-badge`);
+                
+                // Disable button
+                btn.disabled = true;
+                
+                if (opt === correctOpt) {
+                    // Correct green styling
+                    btn.className = "w-full text-left p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50/50 text-emerald-800 font-extrabold flex gap-3 text-sm transition-all";
+                    badge.className = "flex-shrink-0 w-6 h-6 rounded-lg bg-emerald-500 flex items-center justify-center font-bold text-white shadow-sm";
+                } else if (opt === selectedOpt) {
+                    // Wrong red styling
+                    btn.className = "w-full text-left p-4 rounded-xl border-2 border-rose-500 bg-rose-50/50 text-rose-800 font-bold flex gap-3 text-sm transition-all";
+                    badge.className = "flex-shrink-0 w-6 h-6 rounded-lg bg-rose-500 flex items-center justify-center font-bold text-white shadow-sm";
+                } else {
+                    // Normal gray dimmed styling
+                    btn.className = "w-full text-left p-4 rounded-xl border border-slate-150 text-slate-400 font-medium flex gap-3 text-sm opacity-50";
+                }
+            });
+
+            // Clear any previous auto-advance timeout
+            clearTimeout(studyAutoAdvanceTimeout);
+
+            // Show explanation box
+            const expl = document.getElementById('study-explanation');
+            expl.classList.remove('hidden');
+
+            const correctText = q[correctOpt.toLowerCase()];
+
+            if (isCorrect) {
+                expl.innerHTML = `
+                    <div class="flex gap-3 p-4 bg-emerald-50 text-emerald-800 border border-emerald-100 rounded-xl" id="study-explanation-box">
+                        <div class="flex-shrink-0" id="study-explanation-icon">
+                            <div class="bg-emerald-500 text-white p-1 rounded-full">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-extrabold text-sm" id="study-explanation-title">Prawidłowa odpowiedź!</h4>
+                            <p class="text-xs font-semibold mt-1 leading-relaxed" id="study-explanation-desc">
+                                <strong>Opcja ${correctOpt}:</strong> ${correctText}
+                            </p>
+                            ${currentStudyIdx < filteredStudyQuestions.length - 1 ? `
+                            <p class="text-xs font-bold text-emerald-600 mt-2.5 flex items-center gap-1.5">
+                                <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"></svg>
+                                Przejście do kolejnego pytania za 5 sekund...
+                            </p>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+                // Only schedule auto-advance if it's not the last question
+                if (currentStudyIdx < filteredStudyQuestions.length - 1) {
+                    studyAutoAdvanceTimeout = setTimeout(nextStudyQuestion, 5000);
+                }
+            } else {
+                expl.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex gap-3 p-4 bg-rose-50 text-rose-800 border border-rose-100 rounded-xl" id="study-explanation-box">
+                            <div class="flex-shrink-0" id="study-explanation-icon">
+                                <div class="bg-rose-500 text-white p-1 rounded-full">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-extrabold text-sm" id="study-explanation-title">Błędna odpowiedź! (Prawidłowa to ${correctOpt})</h4>
+                                <p class="text-xs font-semibold mt-1 leading-relaxed" id="study-explanation-desc">
+                                    <strong>Opcja ${correctOpt}:</strong> ${correctText}
+                                </p>
+                            </div>
+                        </div>
+                        ${currentStudyIdx < filteredStudyQuestions.length - 1 ? `
+                        <button onclick="nextStudyQuestion()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-6 rounded-xl text-xs shadow-md transition-all flex items-center justify-center gap-2">
+                            Przejdź dalej
+                            <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+                        </button>
+                        ` : ''}
+                    </div>
+                `;
+            }
+        }
+
+        // EXAM SIMULATOR ENGINE
+        function startExam() {
+            const scope = document.querySelector('input[name="exam-scope"]:checked').value;
+            
+            // Filter questions
+            let candidatePool = questions;
+            let examLength = 50;
+            if (scope === '2024-2025') {
+                candidatePool = questions.filter(q => q.year_group === '2024-2025');
+            } else if (scope === 'Ustawy (Uzupełniające)') {
+                candidatePool = questions.filter(q => q.year_group === 'Ustawy (Uzupełniające)');
+                examLength = candidatePool.length;
+            }
+
+            // Draw random questions
+            if (candidatePool.length < examLength) {
+                alert("Niewystarczająca liczba pytań dla wybranego zakresu.");
+                return;
+            }
+
+            activeExamQuestions = [...candidatePool].sort(() => 0.5 - Math.random()).slice(0, examLength);
+            activeExamAnswers = {};
+            currentExamIdx = 0;
+            examSecondsRemaining = 110 * 60; // 110 minutes
+
+            // Setup view
+            switchView('exam-active');
+            renderExamQuestion();
+            buildExamQuestionMap();
+
+            // Set interval
+            if (examTimerInterval) clearInterval(examTimerInterval);
+            examTimerInterval = setInterval(updateExamTimer, 1000);
+        }
+
+        function updateExamTimer() {
+            if (examSecondsRemaining <= 0) {
+                clearInterval(examTimerInterval);
+                alert("Czas dobiegł końca! Twój egzamin zostanie automatycznie zakończony.");
+                finishExam();
+                return;
+            }
+
+            examSecondsRemaining--;
+            const mins = Math.floor(examSecondsRemaining / 60);
+            const secs = examSecondsRemaining % 60;
+            
+            const timerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            document.getElementById('exam-timer').innerText = timerText;
+
+            // Warn if < 5 minutes
+            const timerBox = document.getElementById('exam-timer-box');
+            if (examSecondsRemaining < 5 * 60) {
+                timerBox.className = "flex items-center justify-center gap-2 px-5 py-2.5 bg-rose-500 border border-rose-600 text-white rounded-xl font-extrabold text-sm sm:self-center animate-pulse";
+            } else {
+                timerBox.className = "flex items-center justify-center gap-2 px-5 py-2.5 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl font-extrabold text-sm sm:self-center";
+            }
+        }
+
+        function buildExamQuestionMap() {
+            const mapContainer = document.getElementById('exam-question-map');
+            mapContainer.innerHTML = '';
+            for (let i = 0; i < activeExamQuestions.length; i++) {
+                const isSelected = (i === currentExamIdx);
+                const hasAnswer = (activeExamAnswers[i] !== undefined);
+                
+                let style = "";
+                if (isSelected) {
+                    style = "bg-brand-600 text-white ring-2 ring-brand-300 ring-offset-2";
+                } else if (hasAnswer) {
+                    style = "bg-slate-700 text-white hover:bg-slate-850";
+                } else {
+                    style = "bg-slate-100 text-slate-500 hover:bg-slate-200";
+                }
+
+                mapContainer.innerHTML += `
+                    <button onclick="jumpToExamQuestion(${i})" class="aspect-square flex items-center justify-center rounded-xl font-extrabold text-xs sm:text-sm transition-all shadow-sm ${style}">${i+1}</button>
+                `;
+            }
+            
+            // Answered counts
+            const count = Object.keys(activeExamAnswers).length;
+            document.getElementById('exam-answered-count').innerText = `${count} / ${activeExamQuestions.length}`;
+        }
+
+        function jumpToExamQuestion(idx) {
+            currentExamIdx = idx;
+            renderExamQuestion();
+            buildExamQuestionMap();
+        }
+
+         function renderExamQuestion() {
+            const q = activeExamQuestions[currentExamIdx];
+            document.getElementById('exam-question-text').innerText = q.question;
+            document.getElementById('exam-question-tag-id').innerText = `Pytanie ${currentExamIdx + 1} z ${activeExamQuestions.length}`;
+            document.getElementById('exam-current-idx-text').innerText = `${currentExamIdx + 1} / ${activeExamQuestions.length}`;
+
+            // Buttons
+            document.getElementById('exam-btn-prev').disabled = currentExamIdx === 0;
+            document.getElementById('exam-btn-next').disabled = currentExamIdx === activeExamQuestions.length - 1;
+
+            updateBookmarkButtonExam();
+
+            // Clean options styles
+            const options = ['A', 'B', 'C'];
+            const userChoice = activeExamAnswers[currentExamIdx];
+
+            options.forEach(opt => {
+                const btn = document.getElementById(`exam-option-${opt}`);
+                const optText = document.getElementById(`exam-option-${opt}-text`);
+                optText.innerText = q[opt.toLowerCase()];
+                
+                if (userChoice === opt) {
+                    btn.className = "w-full text-left p-4 rounded-xl border-2 border-brand-500 bg-brand-50/50 text-brand-900 font-extrabold flex gap-3 text-sm transition-all";
+                } else {
+                    btn.className = "w-full text-left p-4 rounded-xl border border-slate-200 hover:bg-slate-50/50 hover:border-slate-300 transition-all font-medium flex gap-3 text-sm";
+                }
+            });
+        }
+
+        function prevExamQuestion() {
+            if (currentExamIdx > 0) {
+                currentExamIdx--;
+                renderExamQuestion();
+                buildExamQuestionMap();
+            }
+        }
+
+        function nextExamQuestion() {
+            if (currentExamIdx < activeExamQuestions.length - 1) {
+                currentExamIdx++;
+                renderExamQuestion();
+                buildExamQuestionMap();
+            }
+        }
+
+        function selectExamAnswer(opt) {
+            activeExamAnswers[currentExamIdx] = opt;
+            renderExamQuestion();
+            buildExamQuestionMap();
+
+            // Auto-advance after a tiny delay
+            setTimeout(() => {
+                if (currentExamIdx < activeExamQuestions.length - 1) {
+                    nextExamQuestion();
+                }
+            }, 180);
+        }
+
+        function confirmFinishExam() {
+            const unanswered = activeExamQuestions.length - Object.keys(activeExamAnswers).length;
+            let msg = "Czy na pewno chcesz zakończyć egzamin?";
+            if (unanswered > 0) {
+                msg = `Pozostało jeszcze ${unanswered} pytań bez odpowiedzi. Czy na pewno chcesz zakończyć i ocenić egzamin?`;
+            }
+            if (confirm(msg)) {
+                finishExam();
+            }
+        }
+
+        function finishExam() {
+            clearInterval(examTimerInterval);
+            
+            // Compute scores
+            let score = 0;
+            const reviewContainer = document.getElementById('exam-results-review-container');
+            reviewContainer.innerHTML = '';
+
+            activeExamQuestions.forEach((q, idx) => {
+                const userChoice = activeExamAnswers[idx] || null;
+                const correctChoice = q.answer;
+                const isCorrect = (userChoice === correctChoice);
+                if (isCorrect) score++;
+
+                // Build review item HTML
+                let userChoiceBadge = `<span class="text-slate-400 font-semibold italic text-xs">brak odpowiedzi</span>`;
+                if (userChoice) {
+                    const choiceText = q[userChoice.toLowerCase()];
+                    if (isCorrect) {
+                        userChoiceBadge = `<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-xs font-bold">Twoja poprawna odpowiedź: Opcja ${userChoice}</span>`;
+                    } else {
+                        userChoiceBadge = `<span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded text-xs font-bold">Twoja błędna odpowiedź: Opcja ${userChoice}</span>`;
+                    }
+                }
+
+                const correctText = q[correctChoice.toLowerCase()];
+                const cardStyle = isCorrect ? 'border-emerald-100 bg-emerald-50/10' : 'border-rose-100 bg-rose-50/10';
+
+                reviewContainer.innerHTML += `
+                    <div class="bg-white p-5 rounded-2xl border ${cardStyle} shadow-sm space-y-4">
+                        <div class="flex justify-between text-xs font-bold text-slate-400">
+                            <span>Pytanie ${idx + 1} z ${activeExamQuestions.length} (Baza ID: ${q.id})</span>
+                            <span>${q.year_group}</span>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-sm leading-snug">${q.question}</h4>
+                        
+                        <div class="grid grid-cols-1 gap-2.5 text-xs text-slate-600 pl-2 border-l-2 border-slate-200">
+                            <p class="${userChoice === 'A' ? 'font-bold' : ''}"><strong>A:</strong> ${q.a}</p>
+                            <p class="${userChoice === 'B' ? 'font-bold' : ''}"><strong>B:</strong> ${q.b}</p>
+                            <p class="${userChoice === 'C' ? 'font-bold' : ''}"><strong>C:</strong> ${q.c}</p>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2 items-center text-xs font-medium pt-2">
+                            ${userChoiceBadge}
+                            <span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-xs font-bold">Prawidłowa odpowiedź: Opcja ${correctChoice}</span>
+                        </div>
+                        <p class="text-xs font-semibold text-slate-500 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                            <strong>Opcja ${correctChoice}:</strong> ${correctText}
+                        </p>
+                    </div>
+                `;
+
+                // Record answer globally in database statistics
+                if (userChoice) {
+                    recordAnswer(q.id, q.year_group, isCorrect);
+                }
+            });
+
+            // Calculate metrics
+            const passingScore = Math.ceil(activeExamQuestions.length * 0.7);
+            const isPassed = (score >= passingScore);
+            const percent = Math.round((score / activeExamQuestions.length) * 100);
+            
+            // Format time taken
+            const timeTakenSecs = (110 * 60) - examSecondsRemaining;
+            const timeTakenMins = Math.floor(timeTakenSecs / 60);
+            const timeTakenRemainingSecs = timeTakenSecs % 60;
+            const timeTakenStr = `${timeTakenMins}m ${timeTakenRemainingSecs}s`;
+
+            // Update result screen
+            document.getElementById('result-score').innerText = `${score} / ${activeExamQuestions.length}`;
+            document.getElementById('result-percent').innerText = `${percent}%`;
+            document.getElementById('result-time-taken').innerText = timeTakenStr;
+
+            const statusBox = document.getElementById('result-status-box');
+            const title = document.getElementById('result-title');
+            const subtitle = document.getElementById('result-subtitle');
+
+            if (isPassed) {
+                statusBox.className = "p-6 bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-3xl inline-block";
+                statusBox.innerHTML = `
+                    <svg class="w-16 h-16 animate-bounce" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                `;
+                title.innerText = "Zdałeś Egzamin!";
+                title.className = "text-2xl sm:text-3xl font-black text-emerald-750";
+                subtitle.innerText = "Gratulacje! Twój wynik uprawnia do wpisu do rejestru pośredników.";
+            } else {
+                statusBox.className = "p-6 bg-rose-50 border border-rose-100 text-rose-600 rounded-3xl inline-block";
+                statusBox.innerHTML = `
+                    <svg class="w-16 h-16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                `;
+                title.innerText = "Niezaliczony.";
+                title.className = "text-2xl sm:text-3xl font-black text-rose-750";
+                subtitle.innerText = `Do zdania wymagane jest uzyskanie co najmniej 70% poprawnych odpowiedzi (minimum ${passingScore} punktów).`;
+            }
+
+            // Record exam history
+            userStats.examsTaken += 1;
+            if (isPassed) userStats.examsPassed += 1;
+            userStats.examHistory.push({
+                date: new Date().getTime(),
+                score: score,
+                total: activeExamQuestions.length,
+                timeTaken: timeTakenStr
+            });
+            localStorage.setItem('knf_stats', JSON.stringify(userStats));
+
+            switchView('exam-result');
+        }
+
+        // BOOKMARKS VIEW ENGINE
+        function renderBookmarksView() {
+            const container = document.getElementById('bookmarks-list-container');
+            document.getElementById('bookmarks-badge-count').innerText = `${bookmarks.length} pytań`;
+
+            if (bookmarks.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white p-12 rounded-3xl border border-slate-200 text-center text-slate-400">
+                        <svg class="w-16 h-16 mx-auto mb-4 text-slate-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.907c.961 0 1.367 1.242.583 1.83l-3.978 2.89a1 1 0 00-.364 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.977-2.89a1 1 0 00-1.175 0l-3.977 2.89c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.364-1.118l-3.976-2.89c-.784-.57-.378-1.83.582-1.83h4.907a1 1 0 00.95-.69l1.519-4.674z"></path></svg>
+                        <h3 class="font-extrabold text-slate-800 text-lg">Twój folder ulubionych jest pusty</h3>
+                        <p class="text-xs font-semibold text-slate-500 mt-1">Zapisuj trudne pytania w trybie nauki lub egzaminu przyciskiem z gwiazdką.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+            bookmarks.forEach((b, index) => {
+                const q = questions.find(item => item.id === b.id && item.year_group === b.year_group);
+                if (!q) return;
+
+                container.innerHTML += `
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 relative">
+                        <div class="flex justify-between text-xs font-bold text-slate-400">
+                            <span>ID: ${q.id} • ${q.year_group}</span>
+                            <button onclick="removeBookmarkByIndex(${index})" class="text-rose-500 hover:text-rose-700 transition-all font-bold">Usuń</button>
+                        </div>
+                        <h4 class="font-bold text-slate-850 text-base leading-snug">${q.question}</h4>
+                        
+                        <div class="grid grid-cols-1 gap-2 text-xs text-slate-600 pl-2 border-l-2 border-slate-200">
+                            <p><strong>A:</strong> ${q.a}</p>
+                            <p><strong>B:</strong> ${q.b}</p>
+                            <p><strong>C:</strong> ${q.c}</p>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2 items-center text-xs font-semibold pt-2">
+                            <span class="bg-emerald-50 text-emerald-700 border border-emerald-100 px-2 py-0.5 rounded">Prawidłowa odpowiedź: Opcja ${q.answer}</span>
+                        </div>
+                        <p class="text-xs font-medium text-slate-500 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                            <strong>Opcja ${q.answer}:</strong> ${q[q.answer.toLowerCase()]}
+                        </p>
+                    </div>
+                `;
+            });
+        }
+
+        function removeBookmarkByIndex(index) {
+            bookmarks.splice(index, 1);
+            localStorage.setItem('knf_bookmarks', JSON.stringify(bookmarks));
+            renderBookmarksView();
+            updateBookmarkCountNav();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+# PDF source files and layout dumps
+pdfs/
+
+# Temporary and local scripts
+test_slice.py
+inspect_line.py
+inspect_exact_chars.py
+debug_boundary.py
+analyze_density.py
+count_anchors.py
+check_missing.py
+check_missing_regex.py
+inspect_transition.py
+scan_starts.py
+inspect_missed.py
+add_statute_questions.py
+
+# System and editor files
+.DS_Store
+.vscode/
+.idea/
