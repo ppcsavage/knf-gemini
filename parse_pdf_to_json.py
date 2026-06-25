@@ -23,7 +23,24 @@ def is_header_or_footer(line):
             return True
     return False
 
-def parse_file(filepath, slices, max_expected, year_group):
+def get_adjusted_boundary(line, expected_idx):
+    if expected_idx >= len(line):
+        return len(line)
+    
+    best_idx = expected_idx
+    min_dist = 999999
+    
+    # Find the closest space index to expected_idx to avoid splitting words
+    for idx, char in enumerate(line):
+        if char.isspace():
+            dist = abs(idx - expected_idx)
+            if dist < min_dist:
+                min_dist = dist
+                best_idx = idx
+                
+    return best_idx
+
+def parse_file(filepath, expected_bounds, max_expected, year_group):
     raw_lines = []
     with open(filepath, 'r', encoding='utf-8') as f:
         for line in f:
@@ -51,7 +68,8 @@ def parse_file(filepath, slices, max_expected, year_group):
         if q in anchor_map:
             # Duplicate anchor, choose the one with the answer on the same line if possible
             line_padded = raw_lines[ln].ljust(200)
-            ans_txt = line_padded[slices['ans'][0]:slices['ans'][1]].strip()
+            b_c_ans = get_adjusted_boundary(line_padded, expected_bounds[4])
+            ans_txt = line_padded[b_c_ans:].strip()
             if ans_txt in ['A', 'B', 'C']:
                 anchor_map[q] = ln
         else:
@@ -72,15 +90,23 @@ def parse_file(filepath, slices, max_expected, year_group):
         # 1. Compute hard upper bound max_b based on uppercase starts
         max_b = ln_next - 1
         
-        def get_col_text(ln, col):
+        def get_col_text_fixed(ln, col_bounds):
             if ln < 0 or ln >= len(raw_lines): return ""
             line_padded = raw_lines[ln].ljust(200)
-            return line_padded[slices[col][0]:slices[col][1]].strip()
+            return line_padded[col_bounds[0]:col_bounds[1]].strip()
             
         for ln in range(ln_curr + 1, ln_next):
-            for col in ['q', 'a', 'b', 'c']:
-                txt = get_col_text(ln, col)
-                prev_txt = get_col_text(ln - 1, col)
+            q_txt = get_col_text_fixed(ln, (expected_bounds[0], expected_bounds[1]))
+            a_txt = get_col_text_fixed(ln, (expected_bounds[1], expected_bounds[2]))
+            b_txt = get_col_text_fixed(ln, (expected_bounds[2], expected_bounds[3]))
+            c_txt = get_col_text_fixed(ln, (expected_bounds[3], expected_bounds[4]))
+            
+            for txt, prev_txt in [
+                (q_txt, get_col_text_fixed(ln - 1, (expected_bounds[0], expected_bounds[1]))),
+                (a_txt, get_col_text_fixed(ln - 1, (expected_bounds[1], expected_bounds[2]))),
+                (b_txt, get_col_text_fixed(ln - 1, (expected_bounds[2], expected_bounds[3]))),
+                (c_txt, get_col_text_fixed(ln - 1, (expected_bounds[3], expected_bounds[4])))
+            ]:
                 if txt and not prev_txt:
                     if txt[0].isupper():
                         max_b = min(max_b, ln - 1)
@@ -129,14 +155,25 @@ def parse_file(filepath, slices, max_expected, year_group):
         for ln in range(start_ln, end_ln + 1):
             line_padded = raw_lines[ln].ljust(200)
             
-            q_txt = line_padded[slices['q'][0]:slices['q'][1]].strip()
+            # Dynamically adjust boundaries for this line to prevent split-word bugs
+            # If it's the anchor line, LP column has a question number, so we start Q after the LP column.
+            # If it is NOT the anchor line, the LP column is empty, so Q can safely start at index 0!
+            b_lp_q = expected_bounds[0] if ln == anchor_map[q] else 0
+            
+            b_q_a = get_adjusted_boundary(line_padded, expected_bounds[1])
+            b_a_b = get_adjusted_boundary(line_padded, expected_bounds[2])
+            b_b_c = get_adjusted_boundary(line_padded, expected_bounds[3])
+            b_c_ans = get_adjusted_boundary(line_padded, expected_bounds[4])
+            
+            q_txt = line_padded[b_lp_q:b_q_a].strip()
             if ln == anchor_map[q]:
+                # strip leading number from q_txt if present
                 q_txt = re.sub(r'^\d+\s*', '', q_txt)
                 
-            a_txt = line_padded[slices['a'][0]:slices['a'][1]].strip()
-            b_txt = line_padded[slices['b'][0]:slices['b'][1]].strip()
-            c_txt = line_padded[slices['c'][0]:slices['c'][1]].strip()
-            ans_txt = line_padded[slices['ans'][0]:slices['ans'][1]].strip()
+            a_txt = line_padded[b_q_a:b_a_b].strip()
+            b_txt = line_padded[b_a_b:b_b_c].strip()
+            c_txt = line_padded[b_b_c:b_c_ans].strip()
+            ans_txt = line_padded[b_c_ans:].strip()
             
             if q_txt: q_lines.append(q_txt)
             if a_txt: a_lines.append(a_txt)
@@ -163,27 +200,13 @@ def parse_file(filepath, slices, max_expected, year_group):
     return questions
 
 # 2024-2025
-slices_24_25 = {
-    'lp': (0, 6),
-    'q': (6, 48),
-    'a': (48, 85),
-    'b': (85, 121),
-    'c': (121, 158),
-    'ans': (158, 200)
-}
-q_24_25 = parse_file("pdfs/questions_2024_2025_layout.txt", slices_24_25, 150, "2024-2025")
+expected_bounds_24_25 = [8, 48, 85, 121, 158]
+q_24_25 = parse_file("pdfs/questions_2024_2025_layout.txt", expected_bounds_24_25, 150, "2024-2025")
 print(f"Parsed 2024-2025: {len(q_24_25)} questions.")
 
 # 2018-2023
-slices_18_23 = {
-    'lp': (0, 3),
-    'q': (3, 46),
-    'a': (46, 82),
-    'b': (82, 112),
-    'c': (112, 145),
-    'ans': (145, 200)
-}
-q_18_23 = parse_file("pdfs/questions_2018_2023_layout.txt", slices_18_23, 206, "2018-2023")
+expected_bounds_18_23 = [6, 45, 81, 113, 145]
+q_18_23 = parse_file("pdfs/questions_2018_2023_layout.txt", expected_bounds_18_23, 206, "2018-2023")
 print(f"Parsed 2018-2023: {len(q_18_23)} questions.")
 
 # Save to json
